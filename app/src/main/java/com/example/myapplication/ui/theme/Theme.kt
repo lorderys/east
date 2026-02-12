@@ -1,24 +1,33 @@
 package com.example.myapplication.ui.theme
 
-import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalView
+import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
     primary = Orange80,
     onPrimary = Orange40,
     surface = Orange,
     secondary = Orange60,
+    onSecondary = Success,
     background = Black40,
     onSurface = Black20,
     surfaceVariant = Black60,
-    outline = Black80
+    outline = Black80,
+    error = Error,
+    onError = Warning,
+    onBackground = Text40,
+    tertiary = TextTertiary20,
+    onTertiary = Premium
+
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -26,43 +35,71 @@ private val LightColorScheme = lightColorScheme(
     onPrimary = Orange40,
     surface = Orange,
     secondary = Orange60,
+    onSecondary = Success,
     background = White40,
     onSurface = White20,
     surfaceVariant = White60,
-    outline = White80
-
-
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    outline = White80,
+    error = Error,
+    onError = Warning,
+    onBackground = Black40,
+    tertiary = TextTertiary,
+    onTertiary = Premium
 )
+
+enum class Theme {
+    SYSTEM,
+    LIGHT,
+    DARK
+}
 
 @Composable
 fun MyApplicationTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = true,
+    theme: Theme,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
 
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+    val enterDarkMode = when (theme) {
+        Theme.SYSTEM -> isSystemInDarkTheme()
+        Theme.LIGHT -> false
+        Theme.DARK -> true
     }
 
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
-    )
+    val colorScheme = if(enterDarkMode) {
+        DarkColorScheme
+    } else {
+        LightColorScheme
+    }
+
+    val view = LocalView.current
+    if (!view.isInEditMode) {
+        SideEffect {
+            val window = (view.context as android.app.Activity).window
+
+            window.statusBarColor = colorScheme.background.toArgb()
+            window.navigationBarColor = colorScheme.background.toArgb()
+
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars =
+                !enterDarkMode
+            WindowCompat.getInsetsController(window, view).isAppearanceLightNavigationBars =
+                !enterDarkMode
+        }
+    }
+
+    val LocalSpacing = staticCompositionLocalOf { AppSpacing() }
+    val LocalElevation = staticCompositionLocalOf { AppElevation() }
+    val LocalDimens = staticCompositionLocalOf { Dimens() }
+
+    CompositionLocalProvider(
+        LocalSpacing provides AppSpacing(),
+        LocalDimens provides Dimens(),
+        LocalElevation provides AppElevation()
+    ) {
+        MaterialTheme(
+            colorScheme = colorScheme,
+            typography = Typography,
+            shapes = shapes,
+            content = content
+        )
+    }
 }
