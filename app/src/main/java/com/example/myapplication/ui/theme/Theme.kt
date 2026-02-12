@@ -13,12 +13,12 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Orange80,
-    onPrimary = Orange40,
-    surface = Orange,
-    secondary = Orange60,
+    primary = PrimaryOrange,
+    onPrimary = DarkOrange,
+    surface = LightOrange,
+    secondary = DarkOrange,
     onSecondary = Success,
-    background = Black40,
+    background = BackgroundDt,
     onSurface = Black20,
     surfaceVariant = Black60,
     outline = Black80,
@@ -31,14 +31,14 @@ private val DarkColorScheme = darkColorScheme(
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Orange80,
-    onPrimary = Orange40,
-    surface = Orange,
-    secondary = Orange60,
+    primary = PrimaryOrange,
+    onPrimary = DarkOrange,
+    surface = LightOrange,
+    secondary = DarkOrange,
     onSecondary = Success,
-    background = White40,
+    background = BackgroundLt,
     onSurface = White20,
-    surfaceVariant = White60,
+    surfaceVariant = Gray200,
     outline = White80,
     error = Error,
     onError = Warning,

@@ -2,10 +2,17 @@ package com.example.myapplication.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Orange80 = Color(0xFFE8443A)
-val Orange40 = Color(0xFFC23328)
-val Orange60 = Color(0xFFFF6B5E)
-val Orange = Color(0xFFE8443A)
+val PrimaryOrange = Color(0xFFE8443A)//Base
+val DarkOrange = Color(0xFFC23328) //Pressed
+val LightOrange = Color(0xFFFF6B5E) //surface
+
+val BackgroundDt = Color(0xFF000000)
+val Gray50 = Color(0xFFFAFAFA)
+val Gray100 = Color(0xFFEAEAEA)
+val Gray200 = Color(0xFF999999)
+val Gray300 = Color(0xFF888888)
+val Gray400 = Color(0xFF666666)
+val Black80 = Color(0xFF5A5651)
 
 val White40 = Color(0xFFFAF8F5)
 val Black40 = Color(0xFF2A2826)  //TextPrimary
@@ -14,16 +21,12 @@ val White20 = Color(0xFFFFFEFC)  //onBrand
 val Black20 = Color(0xFF3D3A36)
 
 
-val White60 = Color(0xFFFFFFFF)
+val BackgroundLt = Color(0xFFFFFFFF)
 val Black60 = Color(0xFF504D48)
 
 val White80 = Color(0xFFEBE7E0)
-val Black80 = Color(0xFF5A5651)
 
 val Text40 = Color(0xFFE8E6E3)
-
-val TextSecondary = Color(0xFF6B6762)
-val TextSecondary20 = Color(0xFFBBB8B3)
 
 val TextTertiary = Color(0xFF9D9A95)
 val TextTertiary20 = Color(0xFF888580)

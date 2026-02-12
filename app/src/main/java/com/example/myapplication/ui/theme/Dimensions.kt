@@ -13,10 +13,15 @@ data class Dimens(
     val medium2: Dp = 24.dp,
     val medium3: Dp = 30.dp,
     val large: Dp = 48.dp,
-    val buttonHeight: Dp = 40.dp,
+    val buttonHeight: Dp = 50.dp,
     val cardPaddingHorizontal: Dp = 20.dp,
     val cardPaddingVertical: Dp = 12.dp,
     val logoSize: Dp = 42.dp,
+    val hero: Dp = 64.dp,
+    val divider: Dp = 1.dp,
+    val iconSizeSmall: Dp = 18.dp,
+    val iconSizeMedium: Dp = 24.dp,
+
 )
 
 
