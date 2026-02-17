@@ -1,16 +1,20 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.google.services)
+    kotlin("plugin.serialization") version "2.0.21"
 }
 
 android {
-    namespace = "com.example.myapplication"
+    namespace = "com.example.east"
     compileSdk {
         version = release(36)
     }
 
     defaultConfig {
-        applicationId = "com.example.myapplication"
+        applicationId = "com.example.east"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
@@ -35,9 +39,23 @@ android {
     buildFeatures {
         compose = true
     }
+//    kotlinOptions {
+//        jvmTarget = "11"
+//    }
 }
 
 dependencies {
+
+    val composeBom = platform("androidx.compose:compose-bom:2026.01.01")
+    implementation(composeBom)
+    testImplementation(composeBom)
+    androidTestImplementation(composeBom)
+
+    //Dagger Hilt
+    implementation(libs.hilt)
+    ksp(libs.hilt.compiler)
+
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
