@@ -54,7 +54,7 @@ enum class Theme {
 }
 
 @Composable
-fun MyApplicationTheme(
+fun EastTheme(
     theme: Theme,
     content: @Composable () -> Unit
 ) {
