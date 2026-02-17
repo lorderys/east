@@ -7,7 +7,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.googlefonts.Font
 import androidx.compose.ui.text.googlefonts.GoogleFont
 import androidx.compose.ui.unit.sp
-import com.example.myapplication.R
+import com.example.east.R
 
 val provider = GoogleFont.Provider(
     providerAuthority = "com.google.android.gms.fonts",
@@ -51,7 +51,7 @@ val Typography = Typography(
         fontFamily = manRope,
         fontWeight = FontWeight.SemiBold,
         fontSize = 12.sp,
-        lineHeight = 16.sp
+        lineHeight = 14.sp
     ),
     titleMedium = TextStyle(
         fontFamily = cormorant,
