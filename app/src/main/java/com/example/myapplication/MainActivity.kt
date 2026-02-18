@@ -16,13 +16,13 @@ import com.example.myapplication.ui.theme.Theme
 
 class MainActivity : ComponentActivity() {
 
-    private val theme = Theme.SYSTEM
+    //private val theme = Theme.SYSTEM
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            EastTheme(theme = theme) {
+            EastTheme(/* theme = theme */) {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Text("hello Odoyo",
                     modifier= Modifier.padding(innerPadding)

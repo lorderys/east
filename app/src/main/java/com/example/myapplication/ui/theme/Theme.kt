@@ -48,14 +48,18 @@ private val LightColorScheme = lightColorScheme(
 )
 
 enum class Theme {
-    SYSTEM,
     LIGHT,
-    DARK
+    DARK,
+    SYSTEM;
+
+    companion object {
+        val default = SYSTEM
+    }
 }
 
 @Composable
 fun EastTheme(
-    theme: Theme,
+    theme: Theme = Theme.SYSTEM,
     content: @Composable () -> Unit
 ) {
 
@@ -65,11 +69,7 @@ fun EastTheme(
         Theme.DARK -> true
     }
 
-    val colorScheme = if(enterDarkMode) {
-        DarkColorScheme
-    } else {
-        LightColorScheme
-    }
+    val colorScheme = if(enterDarkMode) DarkColorScheme else LightColorScheme
 
     val view = LocalView.current
     if (!view.isInEditMode) {

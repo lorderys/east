@@ -1,3 +1,5 @@
+import org.gradle.kotlin.dsl.kotlin
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
@@ -16,7 +18,7 @@ android {
     defaultConfig {
         applicationId = "com.example.east"
         minSdk = 24
-        targetSdk = 36
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -39,18 +41,12 @@ android {
     buildFeatures {
         compose = true
     }
-//    kotlinOptions {
-//        jvmTarget = "11"
+//    kotlin {
+//        jvmToolchain(11)
 //    }
 }
 
 dependencies {
-
-    val composeBom = platform("androidx.compose:compose-bom:2026.01.01")
-    implementation(composeBom)
-    testImplementation(composeBom)
-    androidTestImplementation(composeBom)
-
     //Dagger Hilt
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
@@ -60,10 +56,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
-    implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui.text.google.fonts)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
