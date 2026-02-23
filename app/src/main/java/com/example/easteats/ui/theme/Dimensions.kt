@@ -1,6 +1,5 @@
-package com.example.myapplication.ui.theme
+package com.example.easteats.ui.theme
 
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
