@@ -56,7 +56,7 @@ fun OnboardingFlow() {
         ),
         OnboardingPageInfo(
             icon = R.drawable.ic_calendar,
-            title = "Schedule & Relax",
+            title = "Schedule your meal & Relax",
             description = "Plan your week ahead. We handle the shopping, cooking, and delivery.",
             bgImage = painterResource(id = R.drawable.onboardingbg2),
             buttonText = "Get Started"

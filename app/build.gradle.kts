@@ -49,6 +49,7 @@ android {
 dependencies {
     //Dagger Hilt
     implementation(libs.hilt)
+    implementation(libs.androidx.compose.material3)
     ksp(libs.hilt.compiler)
 
     implementation(libs.androidx.core.ktx)
