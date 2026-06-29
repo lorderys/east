@@ -57,8 +57,14 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -87,6 +93,7 @@ import com.easteats.app.ui.theme.PanelSoft
 import com.easteats.app.ui.theme.Stroke
 import com.easteats.app.ui.theme.Success
 import com.easteats.app.ui.theme.TextPrimary
+import kotlin.math.roundToInt
 
 @Composable
 fun ScreenShell(content: @Composable BoxScope.() -> Unit) {
@@ -341,17 +348,32 @@ fun CompactButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifi
 }
 
 @Composable
-fun LabelChip(label: String, selected: Boolean, modifier: Modifier = Modifier) {
-    Box(
+fun LabelChip(label: String, selected: Boolean, modifier: Modifier = Modifier, onClick: (() -> Unit)? = null) {
+    val chipModifier = if (onClick == null) {
         modifier
+    } else {
+        modifier.clickable(onClick = onClick)
+    }
+
+    Box(
+        chipModifier
             .height(48.dp)
             .clip(RoundedCornerShape(13.dp))
             .background(if (selected) AccentDeep else Color.Transparent)
             .border(1.dp, if (selected) Accent else Stroke, RoundedCornerShape(13.dp))
-            .padding(horizontal = 14.dp),
+            .padding(horizontal = 10.dp),
         contentAlignment = Alignment.Center
     ) {
-        Text(label, color = if (selected) Accent else TextPrimary, fontSize = 13.sp, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center)
+        Text(
+            label,
+            color = if (selected) Accent else TextPrimary,
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Bold,
+            maxLines = 1,
+            overflow = TextOverflow.Clip,
+            softWrap = false,
+            textAlign = TextAlign.Center
+        )
     }
 }
 
@@ -490,6 +512,12 @@ fun Pill(text: String, modifier: Modifier = Modifier, dark: Boolean = true) {
 
 @Composable
 fun FilterBottomSheet(onClose: () -> Unit) {
+    val sortOptions = listOf("Recommended", "Rating", "Delivery Time")
+    val dietaryOptions = listOf("Vegetarian", "Vegan", "Gluten-free")
+    var selectedSort by remember { mutableStateOf(sortOptions.first()) }
+    var selectedDietaryOption by remember { mutableStateOf("Vegan") }
+    var priceLimit by remember { mutableStateOf(1200f) }
+
     Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.72f)).clickable(onClick = onClose)) {
         Column(
             Modifier
@@ -506,31 +534,64 @@ fun FilterBottomSheet(onClose: () -> Unit) {
             Text("Filters", color = TextPrimary, fontSize = 20.sp, fontWeight = FontWeight.ExtraBold, modifier = Modifier.padding(top = 28.dp, bottom = 26.dp))
             SheetLabel("Sort by")
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp), modifier = Modifier.fillMaxWidth()) {
-                LabelChip("Recommended", true)
-                LabelChip("Rating", false)
-                LabelChip("Delivery Time", false)
-            }
-            Spacer(Modifier.height(24.dp))
-            SheetLabel("Price Range")
-            Box(Modifier.fillMaxWidth().height(38.dp)) {
-                Box(Modifier.align(Alignment.Center).fillMaxWidth().height(4.dp).clip(CircleShape).background(Stroke))
-                Box(Modifier.align(Alignment.CenterStart).fillMaxWidth(0.55f).height(5.dp).clip(CircleShape).background(Accent))
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                    Text("\$", color = Muted)
-                    Text("\$\$\$\$", color = Muted)
+                sortOptions.forEach { option ->
+                    LabelChip(
+                        label = option,
+                        selected = selectedSort == option,
+                        modifier = Modifier.weight(1f),
+                        onClick = { selectedSort = option }
+                    )
                 }
             }
+            Spacer(Modifier.height(24.dp))
+            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                Text("Price Range", color = TextPrimary, fontSize = 14.sp, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
+                Text("\$${priceLimit.roundToInt()}", color = Accent, fontSize = 14.sp, fontWeight = FontWeight.ExtraBold)
+            }
+            PriceRangeSlider(
+                value = priceLimit,
+                onValueChange = { priceLimit = it },
+                modifier = Modifier.fillMaxWidth().padding(top = 8.dp)
+            )
             Spacer(Modifier.height(20.dp))
             SheetLabel("Dietary")
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp), modifier = Modifier.fillMaxWidth()) {
-                LabelChip("Vegetarian", false)
-                LabelChip("Vegan", true)
-                LabelChip("Gluten-free", false)
+                dietaryOptions.forEach { option ->
+                    LabelChip(
+                        label = option,
+                        selected = option == selectedDietaryOption,
+                        modifier = Modifier.weight(1f),
+                        onClick = { selectedDietaryOption = option }
+                    )
+                }
             }
             Spacer(Modifier.height(28.dp))
             PrimaryButton("Apply Filters", onClick = onClose, modifier = Modifier.fillMaxWidth())
             SecondaryButton("Close", onClose, Modifier.fillMaxWidth().padding(top = 14.dp))
         }
+    }
+}
+
+@Composable
+private fun PriceRangeSlider(value: Float, onValueChange: (Float) -> Unit, modifier: Modifier = Modifier) {
+    Row(
+        modifier.height(48.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text("\$0", color = Muted, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+        Slider(
+            value = value,
+            onValueChange = onValueChange,
+            valueRange = 0f..2000f,
+            steps = 19,
+            colors = SliderDefaults.colors(
+                thumbColor = Accent,
+                activeTrackColor = Accent,
+                inactiveTrackColor = Stroke
+            ),
+            modifier = Modifier.weight(1f).padding(horizontal = 12.dp)
+        )
+        Text("\$2000", color = Muted, fontSize = 12.sp, fontWeight = FontWeight.Bold)
     }
 }
 
