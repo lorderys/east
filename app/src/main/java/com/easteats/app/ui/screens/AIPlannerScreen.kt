@@ -107,7 +107,7 @@ fun BudgetScreen(onBack: () -> Unit, onSave: () -> Unit) {
     var selected by remember { mutableStateOf("Premium") }
     FlowScreen("Weekly Budget", onBack, "Save Budget", onSave) {
         Text("This helps AI suggest meals within your price range.", color = Muted, fontSize = 14.sp, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
-        listOf("Economy" to "\$50-80 / week", "Balanced" to "\$80-120 / week", "Premium" to "\$120+ / week").forEach { (title, sub) ->
+        listOf("Economy" to "KES 50-80 / week", "Balanced" to "KES 80-120 / week", "Premium" to "KES 120+ / week").forEach { (title, sub) ->
             ChoiceRow(title, sub, Icons.Outlined.CreditCard, selected == title) { selected = title }
         }
     }
@@ -129,4 +129,3 @@ private fun PlannerCard(title: String, icon: ImageVector, onClick: () -> Unit, m
         Text(title, color = TextPrimary, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, modifier = Modifier.padding(top = 12.dp))
     }
 }
-

@@ -66,8 +66,8 @@ fun OrdersScreen(onDetail: () -> Unit, onTrack: () -> Unit, onDelivered: () -> U
         item {
             Text("Past Orders", color = TextPrimary, fontSize = 18.sp, fontWeight = FontWeight.Bold)
             Spacer(Modifier.height(12.dp))
-            PastOrder("Butter Fried Shrimp", "\$28.90", "Yesterday", onDelivered)
-            PastOrder("Garlic Dough Pizza", "\$55.00", "Mon, Oct 24", onDelivered)
+            PastOrder("Butter Fried Shrimp", "KES 28.90", "Yesterday", onDelivered)
+            PastOrder("Garlic Dough Pizza", "KES 55.00", "Mon, Oct 24", onDelivered)
         }
     }
 }
@@ -126,7 +126,7 @@ private fun OrderProgressCard(onDetail: () -> Unit, onTrack: () -> Unit) {
             ImageSlot(DummyData.meals[4].image, Modifier.size(72.dp).clip(RoundedCornerShape(14.dp)))
             Column(Modifier.padding(start = 14.dp).weight(1f)) {
                 Text("Lamb Chops", color = TextPrimary, fontSize = 16.sp, fontWeight = FontWeight.ExtraBold)
-                Text("3 items • \$42.50", color = Muted, fontSize = 12.sp, modifier = Modifier.padding(top = 4.dp))
+                Text("3 items • KES 42.50", color = Muted, fontSize = 12.sp, modifier = Modifier.padding(top = 4.dp))
             }
             CompactButton("Track", onTrack, Modifier.width(92.dp))
         }

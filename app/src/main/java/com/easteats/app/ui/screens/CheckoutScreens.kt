@@ -58,7 +58,7 @@ fun CartScreen(hasItem: Boolean, onBack: () -> Unit, onBrowse: () -> Unit, onChe
                 CartItem()
                 PriceSummary()
                 Spacer(Modifier.weight(1f))
-                PrimaryButton("Checkout", "\$46.99", onCheckout, modifier = Modifier.fillMaxWidth())
+                PrimaryButton("Checkout", "KES 46.99", onCheckout, modifier = Modifier.fillMaxWidth())
             }
         }
     }
@@ -103,19 +103,19 @@ fun ReviewScreen(onBack: () -> Unit, onPlace: () -> Unit) {
             item {
                 PanelBox {
                     Text("ORDER SUMMARY", color = Muted, fontSize = 12.sp, fontWeight = FontWeight.Bold)
-                    SummaryRow("Buddha Bowl", "\$42.50")
+                    SummaryRow("Buddha Bowl", "KES 42.50")
                     DividerLine()
                     InfoChange("Delivering to", "Home • 123 Main St")
                     InfoChange("Pay with", "Visa •••• 4242")
                     DividerLine()
-                    SummaryRow("Subtotal", "\$42.50", muted = true)
-                    SummaryRow("Delivery Fee", "\$2.99", muted = true)
-                    SummaryRow("Service Fee", "\$1.50", muted = true)
+                    SummaryRow("Subtotal", "KES 42.50", muted = true)
+                    SummaryRow("Delivery Fee", "KES 2.99", muted = true)
+                    SummaryRow("Service Fee", "KES 1.50", muted = true)
                     DividerLine()
-                    SummaryRow("Total", "\$46.99", large = true)
+                    SummaryRow("Total", "KES 46.99", large = true)
                 }
             }
-            item { PrimaryButton("Place Order", "\$46.99", onPlace, Modifier.fillMaxWidth()) }
+            item { PrimaryButton("Place Order", "KES 46.99", onPlace, Modifier.fillMaxWidth()) }
             item { SecondaryButton("Close", onBack, Modifier.fillMaxWidth()) }
         }
     }

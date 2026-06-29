@@ -546,7 +546,7 @@ fun FilterBottomSheet(onClose: () -> Unit) {
             Spacer(Modifier.height(24.dp))
             Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                 Text("Price Range", color = TextPrimary, fontSize = 14.sp, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
-                Text("\$${priceLimit.roundToInt()}", color = Accent, fontSize = 14.sp, fontWeight = FontWeight.ExtraBold)
+                Text("KES ${priceLimit.roundToInt()}", color = Accent, fontSize = 14.sp, fontWeight = FontWeight.ExtraBold)
             }
             PriceRangeSlider(
                 value = priceLimit,
@@ -578,7 +578,7 @@ private fun PriceRangeSlider(value: Float, onValueChange: (Float) -> Unit, modif
         modifier.height(48.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text("\$0", color = Muted, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+        Text("KES 0", color = Muted, fontSize = 12.sp, fontWeight = FontWeight.Bold)
         Slider(
             value = value,
             onValueChange = onValueChange,
@@ -591,7 +591,7 @@ private fun PriceRangeSlider(value: Float, onValueChange: (Float) -> Unit, modif
             ),
             modifier = Modifier.weight(1f).padding(horizontal = 12.dp)
         )
-        Text("\$2000", color = Muted, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+        Text("KES 2000", color = Muted, fontSize = 12.sp, fontWeight = FontWeight.Bold)
     }
 }
 
@@ -618,7 +618,7 @@ fun CartItem() {
                 QuantityStepper(1, {}, {}, compact = true)
             }
             Column(horizontalAlignment = Alignment.End) {
-                Text("\$42.50", color = TextPrimary, fontWeight = FontWeight.Bold)
+                Text("KES 42.50", color = TextPrimary, fontWeight = FontWeight.Bold)
                 Icon(Icons.Outlined.Delete, null, tint = Muted, modifier = Modifier.padding(top = 22.dp).size(18.dp))
             }
         }
@@ -628,11 +628,11 @@ fun CartItem() {
 @Composable
 fun PriceSummary() {
     PanelBox {
-        SummaryRow("Subtotal", "\$42.50", muted = true)
-        SummaryRow("Delivery Fee", "\$2.99", muted = true)
-        SummaryRow("Service Fee", "\$1.50", muted = true)
+        SummaryRow("Subtotal", "KES 42.50", muted = true)
+        SummaryRow("Delivery Fee", "KES 2.99", muted = true)
+        SummaryRow("Service Fee", "KES 1.50", muted = true)
         DividerLine()
-        SummaryRow("Total", "\$46.99", large = true)
+        SummaryRow("Total", "KES 46.99", large = true)
     }
 }
 

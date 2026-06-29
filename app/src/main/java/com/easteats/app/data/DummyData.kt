@@ -22,11 +22,11 @@ object DummyData {
     )
 
     val meals = listOf(
-        Meal("Buddha Bowl", "Healthy", "\$14.99", "20 min", "4.8", R.drawable.buddhabowl),
-        Meal("Salmon Poke", "Fresh", "\$16.50", "25 min", "4.7", R.drawable.salmonpoke),
-        Meal("Avocado Toast", "Breakfast", "\$12.00", "15 min", "4.6", R.drawable.avocadotoast),
-        Meal("Veggie Burger", "Popular", "\$15.00", "30 min", "4.5", R.drawable.veggieburger),
+        Meal("Buddha Bowl", "Healthy", "KES 14.99", "20 min", "4.8", R.drawable.buddhabowl),
+        Meal("Salmon Poke", "Fresh", "KES 16.50", "25 min", "4.7", R.drawable.salmonpoke),
+        Meal("Avocado Toast", "Breakfast", "KES 12.00", "15 min", "4.6", R.drawable.avocadotoast),
+        Meal("Veggie Burger", "Popular", "KES 15.00", "30 min", "4.5", R.drawable.veggieburger),
         Meal("Quinoa Power Bowl", "Tasty & Delicious", "KES 1,450", "25-35 min", "4.8", R.drawable.container),
-        Meal("Butter Fried Shrimp", "Seafood", "\$28.90", "35 min", "4.9", R.drawable.container3)
+        Meal("Butter Fried Shrimp", "Seafood", "KES 28.90", "35 min", "4.9", R.drawable.container3)
     )
 }
