@@ -4,6 +4,8 @@ import com.easteats.app.model.AppTab
 import com.easteats.app.model.Meal
 
 sealed interface AppScreen {
+    data object Onboarding : AppScreen
+    data object Login : AppScreen
     data class Main(val tab: AppTab) : AppScreen
     data class Detail(val meal: Meal) : AppScreen
     data object Cart : AppScreen

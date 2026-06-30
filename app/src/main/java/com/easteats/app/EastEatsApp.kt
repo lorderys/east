@@ -1,5 +1,6 @@
 package com.easteats.app
 
+import android.content.Context
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -10,6 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import com.easteats.app.model.AppTab
 import com.easteats.app.navigation.AppScreen
 import com.easteats.app.ui.components.AppFrame
@@ -19,6 +21,8 @@ import com.easteats.app.ui.screens.BudgetScreen
 import com.easteats.app.ui.screens.CartScreen
 import com.easteats.app.ui.screens.DetailScreen
 import com.easteats.app.ui.screens.HomeScreen
+import com.easteats.app.ui.screens.LoginScreen
+import com.easteats.app.ui.screens.OnboardingScreen
 import com.easteats.app.ui.screens.OrderDetailScreen
 import com.easteats.app.ui.screens.OrderStatusScreen
 import com.easteats.app.ui.screens.OrdersScreen
@@ -33,11 +37,26 @@ import com.easteats.app.ui.theme.Ink
 
 @Composable
 fun EastEatsApp() {
-    var screen by remember { mutableStateOf<AppScreen>(AppScreen.Main(AppTab.Home)) }
+    val context = LocalContext.current
+    val preferences = remember(context) {
+        context.getSharedPreferences("east_eats_preferences", Context.MODE_PRIVATE)
+    }
+    var screen by remember {
+        mutableStateOf<AppScreen>(
+            if (preferences.getBoolean("onboarding_complete", false)) {
+                AppScreen.Login
+            } else {
+                AppScreen.Onboarding
+            }
+        )
+    }
     var cartHasItem by remember { mutableStateOf(false) }
     var filtersOpen by remember { mutableStateOf(false) }
     var settingsReturnTab by remember { mutableStateOf(AppTab.Planner) }
     val currentScreen = screen
+    val canReturnToMain = currentScreen !is AppScreen.Main &&
+        currentScreen !is AppScreen.Onboarding &&
+        currentScreen !is AppScreen.Login
 
     EastEatsTheme {
         Box(Modifier.fillMaxSize().background(Ink)) {
@@ -45,11 +64,20 @@ fun EastEatsApp() {
                 filtersOpen = false
             }
 
-            BackHandler(enabled = !filtersOpen && currentScreen !is AppScreen.Main) {
+            BackHandler(enabled = !filtersOpen && canReturnToMain) {
                 screen = AppScreen.Main(currentScreen.returnTab(settingsReturnTab))
             }
 
             when (val current = screen) {
+                AppScreen.Onboarding -> OnboardingScreen(
+                    onDone = {
+                        preferences.edit().putBoolean("onboarding_complete", true).apply()
+                        screen = AppScreen.Login
+                    }
+                )
+                AppScreen.Login -> LoginScreen(
+                    onLogin = { screen = AppScreen.Main(AppTab.Home) }
+                )
                 is AppScreen.Main -> AppFrame(
                     selected = current.tab,
                     onTab = { screen = AppScreen.Main(it) }
@@ -152,6 +180,8 @@ fun EastEatsApp() {
 
 private fun AppScreen.returnTab(settingsReturnTab: AppTab): AppTab = when (this) {
     is AppScreen.Main -> tab
+    AppScreen.Onboarding,
+    AppScreen.Login -> AppTab.Home
     is AppScreen.Detail,
     AppScreen.Cart,
     AppScreen.ConfirmAddress,
